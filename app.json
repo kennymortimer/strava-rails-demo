@@ -1,0 +1,28 @@
+{
+  "name": "Strava Dashboard",
+  "description": "A Rails application for visualizing Strava data",
+  "keywords": [
+    "strava",
+    "rails",
+    "dashboard"
+  ],
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "env": {
+    "RAILS_ENV": {
+      "value": "production"
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "value": "true"
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "value": "true"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+} 

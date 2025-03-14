@@ -70,5 +70,5 @@ group :test do
 end
 
 # Use PostgreSQL as the database for Active Record
-gem "pg", "~> 1.4.6"
+gem "pg", "~> 1.2.3"
 
