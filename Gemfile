@@ -69,6 +69,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-# Use PostgreSQL as the database for Active Record in production
-gem "pg", "~> 1.5"
+# Use PostgreSQL as the database for Active Record
+gem "pg", "~> 1.5.3"
 
