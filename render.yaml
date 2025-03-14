@@ -24,6 +24,22 @@ services:
         value: "true"
       - key: RENDER
         value: "true"
+    buildFilter:
+      paths:
+        - app/**
+        - bin/**
+        - config/**
+        - db/**
+        - lib/**
+        - public/**
+        - Gemfile
+        - Gemfile.lock
+        - Rakefile
+        - config.ru
+    disk:
+      name: strava-app-data
+      mountPath: /data
+      sizeGB: 1
 
 databases:
   - name: strava_dashboard_db
