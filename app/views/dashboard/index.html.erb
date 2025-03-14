@@ -1,0 +1,376 @@
+<div class="strava-dashboard">
+  <!-- Title is hidden via CSS now -->
+  <h1>My Strava Dashboard</h1>
+  
+  <div class="unit-toggle">
+    <button id="toggle-km" class="unit-button">Kilometers</button>
+    <button id="toggle-mi" class="unit-button active">Miles</button>
+  </div>
+  
+  <% if @error.present? %>
+    <div class="error-message">
+      <h3><%= @error %></h3>
+      <p class="mt-2"><strong>How to fix this:</strong></p>
+      <ol>
+        <li>Go to <a href="https://www.strava.com/settings/api" target="_blank">Strava API Settings</a></li>
+        <li>Find your existing application or create a new one</li>
+        <li>Under "Authorization Scopes", check the following boxes:
+          <ul>
+            <li>read</li>
+            <li>read_all</li>
+          </ul>
+        </li>
+        <li>Generate a new access token (tokens expire after 6 hours)</li>
+        <li>Open the file <code>app/controllers/dashboard_controller.rb</code></li>
+        <li>Replace <code>"your_strava_access_token"</code> with your new token</li>
+        <li>Restart the Rails server</li>
+        <li>Refresh this page</li>
+      </ol>
+    </div>
+  <% elsif @athlete.present? && @athlete['id'].present? %>
+    <div class="profile-section">
+      <% if @athlete['profile'] %>
+        <img src="<%= @athlete['profile'] %>" alt="Profile Picture" class="profile-pic">
+      <% else %>
+        <div class="profile-pic"></div>
+      <% end %>
+      
+      <div class="name-and-location">
+        <div class="name"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></div>
+        <div class="location">
+          <span class="material-icons location-icon">location_on</span>
+          <%= @athlete['city'] || 'N/A' %>, <%= @athlete['state'] || '' %>, <%= @athlete['country'] || 'N/A' %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sport-tabs">
+      <div class="sport-tab active">
+        <span class="material-icons">directions_bike</span> Cycling
+      </div>
+      <div class="sport-tab">
+        <span class="material-icons">directions_run</span> Running
+      </div>
+      <div class="sport-tab">
+        <span class="material-icons">pool</span> Swimming
+      </div>
+    </div>
+    
+    <% if @athlete_stats.present? && !@stats_error.present? %>
+      <h2>Lifetime Stats</h2>
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-value">
+            <span class="material-icons stat-icon">route</span>
+            <div class="stat-number">
+              <% if @sport_type == 'ride' %>
+                <span class="distance-km" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_ride_totals']['distance'] || 0) / 1000.0, precision: 1)) %> km</span>
+                <span class="distance-mi"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_ride_totals']['distance'] || 0) / 1609.34, precision: 1)) %> mi</span>
+              <% elsif @sport_type == 'run' %>
+                <span class="distance-km" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_run_totals']['distance'] || 0) / 1000.0, precision: 1)) %> km</span>
+                <span class="distance-mi"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_run_totals']['distance'] || 0) / 1609.34, precision: 1)) %> mi</span>
+              <% elsif @sport_type == 'swim' %>
+                <span class="distance-km" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_swim_totals']['distance'] || 0) / 1000.0, precision: 1)) %> km</span>
+                <span class="distance-mi"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_swim_totals']['distance'] || 0) / 1609.34, precision: 1)) %> mi</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="stat-label">Total Distance</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="stat-value">
+            <span class="material-icons stat-icon">schedule</span>
+            <div class="stat-number">
+              <% if @sport_type == 'ride' %>
+                <%= number_with_delimiter(((@athlete_stats['all_ride_totals']['moving_time'] || 0) / 3600.0).round(1)) %> hrs
+              <% elsif @sport_type == 'run' %>
+                <%= number_with_delimiter(((@athlete_stats['all_run_totals']['moving_time'] || 0) / 3600.0).round(1)) %> hrs
+              <% elsif @sport_type == 'swim' %>
+                <%= number_with_delimiter(((@athlete_stats['all_swim_totals']['moving_time'] || 0) / 3600.0).round(1)) %> hrs
+              <% end %>
+            </div>
+          </div>
+          <div class="stat-label">Total Moving Time</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="stat-value">
+            <span class="material-icons stat-icon">terrain</span>
+            <div class="stat-number">
+              <% if @sport_type == 'ride' %>
+                <span class="elevation-m" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_ride_totals']['elevation_gain'] || 0), precision: 0)) %> m</span>
+                <span class="elevation-ft"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_ride_totals']['elevation_gain'] || 0) * 3.28084, precision: 0)) %> ft</span>
+              <% elsif @sport_type == 'run' %>
+                <span class="elevation-m" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_run_totals']['elevation_gain'] || 0), precision: 0)) %> m</span>
+                <span class="elevation-ft"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_run_totals']['elevation_gain'] || 0) * 3.28084, precision: 0)) %> ft</span>
+              <% elsif @sport_type == 'swim' %>
+                <span class="elevation-m" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_swim_totals']['elevation_gain'] || 0), precision: 0)) %> m</span>
+                <span class="elevation-ft"><%= number_with_delimiter(number_with_precision((@athlete_stats['all_swim_totals']['elevation_gain'] || 0) * 3.28084, precision: 0)) %> ft</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="stat-label">Total Elevation Gain</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="stat-value">
+            <% if @sport_type == 'ride' %>
+              <span class="material-icons stat-icon">directions_bike</span>
+            <% elsif @sport_type == 'run' %>
+              <span class="material-icons stat-icon">directions_run</span>
+            <% elsif @sport_type == 'swim' %>
+              <span class="material-icons stat-icon">pool</span>
+            <% end %>
+            <div class="stat-number">
+              <% if @sport_type == 'ride' %>
+                <%= number_with_delimiter(@athlete_stats['all_ride_totals']['count'] || 0) %>
+              <% elsif @sport_type == 'run' %>
+                <%= number_with_delimiter(@athlete_stats['all_run_totals']['count'] || 0) %>
+              <% elsif @sport_type == 'swim' %>
+                <%= number_with_delimiter(@athlete_stats['all_swim_totals']['count'] || 0) %>
+              <% end %>
+            </div>
+          </div>
+          <div class="stat-label">
+            <% if @sport_type == 'ride' %>
+              Total Rides
+            <% elsif @sport_type == 'run' %>
+              Total Runs
+            <% elsif @sport_type == 'swim' %>
+              Total Swims
+            <% end %>
+          </div>
+        </div>
+      </div>
+      
+      <h2>Year-To-Date Stats</h2>
+      
+      <div class="ytd-stats-container">
+        <div class="ytd-stat-box">
+          <div class="ytd-stat-value">
+            <span class="material-icons ytd-stat-icon">route</span>
+            <div class="ytd-stat-number">
+              <% if @sport_type == 'ride' %>
+                <span class="distance-km" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_ride_totals']['distance'] || 0) / 1000.0, precision: 1)) %> km</span>
+                <span class="distance-mi"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_ride_totals']['distance'] || 0) / 1609.34, precision: 1)) %> mi</span>
+              <% elsif @sport_type == 'run' %>
+                <span class="distance-km" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_run_totals']['distance'] || 0) / 1000.0, precision: 1)) %> km</span>
+                <span class="distance-mi"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_run_totals']['distance'] || 0) / 1609.34, precision: 1)) %> mi</span>
+              <% elsif @sport_type == 'swim' %>
+                <span class="distance-km" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_swim_totals']['distance'] || 0) / 1000.0, precision: 1)) %> km</span>
+                <span class="distance-mi"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_swim_totals']['distance'] || 0) / 1609.34, precision: 1)) %> mi</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="ytd-stat-label">YTD Distance</div>
+        </div>
+        
+        <div class="ytd-stat-box">
+          <div class="ytd-stat-value">
+            <span class="material-icons ytd-stat-icon">schedule</span>
+            <div class="ytd-stat-number">
+              <% if @sport_type == 'ride' %>
+                <%= number_with_delimiter(((@athlete_stats['ytd_ride_totals']['moving_time'] || 0) / 3600.0).round(1)) %> hrs
+              <% elsif @sport_type == 'run' %>
+                <%= number_with_delimiter(((@athlete_stats['ytd_run_totals']['moving_time'] || 0) / 3600.0).round(1)) %> hrs
+              <% elsif @sport_type == 'swim' %>
+                <%= number_with_delimiter(((@athlete_stats['ytd_swim_totals']['moving_time'] || 0) / 3600.0).round(1)) %> hrs
+              <% end %>
+            </div>
+          </div>
+          <div class="ytd-stat-label">YTD Moving Time</div>
+        </div>
+        
+        <div class="ytd-stat-box">
+          <div class="ytd-stat-value">
+            <span class="material-icons ytd-stat-icon">terrain</span>
+            <div class="ytd-stat-number">
+              <% if @sport_type == 'ride' %>
+                <span class="elevation-m" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_ride_totals']['elevation_gain'] || 0), precision: 0)) %> m</span>
+                <span class="elevation-ft"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_ride_totals']['elevation_gain'] || 0) * 3.28084, precision: 0)) %> ft</span>
+              <% elsif @sport_type == 'run' %>
+                <span class="elevation-m" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_run_totals']['elevation_gain'] || 0), precision: 0)) %> m</span>
+                <span class="elevation-ft"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_run_totals']['elevation_gain'] || 0) * 3.28084, precision: 0)) %> ft</span>
+              <% elsif @sport_type == 'swim' %>
+                <span class="elevation-m" style="display:none;"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_swim_totals']['elevation_gain'] || 0), precision: 0)) %> m</span>
+                <span class="elevation-ft"><%= number_with_delimiter(number_with_precision((@athlete_stats['ytd_swim_totals']['elevation_gain'] || 0) * 3.28084, precision: 0)) %> ft</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="ytd-stat-label">YTD Elevation Gain</div>
+        </div>
+        
+        <div class="ytd-stat-box">
+          <div class="ytd-stat-value">
+            <% if @sport_type == 'ride' %>
+              <span class="material-icons ytd-stat-icon">directions_bike</span>
+            <% elsif @sport_type == 'run' %>
+              <span class="material-icons ytd-stat-icon">directions_run</span>
+            <% elsif @sport_type == 'swim' %>
+              <span class="material-icons ytd-stat-icon">pool</span>
+            <% end %>
+            <div class="ytd-stat-number">
+              <% if @sport_type == 'ride' %>
+                <%= number_with_delimiter(@athlete_stats['ytd_ride_totals']['count'] || 0) %>
+              <% elsif @sport_type == 'run' %>
+                <%= number_with_delimiter(@athlete_stats['ytd_run_totals']['count'] || 0) %>
+              <% elsif @sport_type == 'swim' %>
+                <%= number_with_delimiter(@athlete_stats['ytd_swim_totals']['count'] || 0) %>
+              <% end %>
+            </div>
+          </div>
+          <div class="ytd-stat-label">
+            <% if @sport_type == 'ride' %>
+              YTD Rides
+            <% elsif @sport_type == 'run' %>
+              YTD Runs
+            <% elsif @sport_type == 'swim' %>
+              YTD Swims
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% elsif @stats_error.present? %>
+      <div class="error-message">
+        <h3>Error: <%= @stats_error %></h3>
+        <p class="mt-2">
+          To view your lifetime stats, you need a Strava token with the proper permissions.
+          Please follow the instructions below to get a new token.
+        </p>
+        <ol>
+          <li>Go to <a href="https://www.strava.com/settings/api" target="_blank">Strava API Settings</a></li>
+          <li>Click on "My API Application" or create a new one</li>
+          <li>Under "Authorization Scopes", check the following boxes:
+            <ul>
+              <li>read</li>
+              <li>read_all</li>
+            </ul>
+          </li>
+          <li>Save your changes</li>
+          <li>Get your new access token</li>
+          <li>Update the token in your dashboard_controller.rb file</li>
+          <li>Restart the Rails server</li>
+        </ol>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="setup-instructions">
+      <h2>Setup Required</h2>
+      <p>Please set your Strava access token to view your data.</p>
+      
+      <h3>How to get a Strava API token:</h3>
+      <ol>
+        <li>Go to <a href="https://www.strava.com/settings/api" target="_blank">Strava API Settings</a></li>
+        <li>If you don't have an API application yet:
+          <ul>
+            <li>Create a new application</li>
+            <li>Fill in the required fields (name, website, description)</li>
+            <li>For the Authorization Callback Domain, you can use <code>localhost</code></li>
+          </ul>
+        </li>
+        <li>Under "Authorization Scopes", check the following boxes:
+          <ul>
+            <li><code>read</code> (for athlete profile)</li>
+            <li><code>read_all</code> (for detailed athlete stats)</li>
+          </ul>
+        </li>
+        <li>Click "Save" if you made any changes</li>
+        <li>Look for the "Your Access Token" section and copy the token</li>
+        <li>Open the file <code>app/controllers/dashboard_controller.rb</code></li>
+        <li>Replace <code>"your_strava_access_token"</code> with your actual token</li>
+        <li>Restart the Rails server</li>
+        <li>Refresh this page</li>
+      </ol>
+      
+      <div class="note">
+        <p><strong>Note:</strong> Strava API tokens expire after 6 hours. If you see authorization errors after that time, you'll need to generate a new token.</p>
+      </div>
+    </div>
+  <% end %>
+  
+  <footer class="dashboard-footer">
+    <p>Strava Dashboard App | Created with Ruby on Rails</p>
+    <p>Data provided by <a href="https://developers.strava.com/" target="_blank">Strava API</a></p>
+    <p><a href="https://github.com/yourusername/strava_app" target="_blank">View on GitHub</a></p>
+    <p><small>Last updated: <%= @last_updated ? @last_updated.strftime('%B %d, %Y at %H:%M:%S') : Time.now.strftime('%B %d, %Y at %H:%M:%S') %></small></p>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const kmButton = document.getElementById('toggle-km');
+    const miButton = document.getElementById('toggle-mi');
+    
+    // Check if there's a saved preference in localStorage
+    const savedUnit = localStorage.getItem('stravaUnit') || 'mi';
+    
+    // Set initial state based on saved preference
+    if (savedUnit === 'km') {
+      setUnitDisplay('km');
+      kmButton.classList.add('active');
+      miButton.classList.remove('active');
+    } else {
+      setUnitDisplay('mi');
+      miButton.classList.add('active');
+      kmButton.classList.remove('active');
+    }
+    
+    kmButton.addEventListener('click', function() {
+      setUnitDisplay('km');
+      kmButton.classList.add('active');
+      miButton.classList.remove('active');
+      localStorage.setItem('stravaUnit', 'km');
+    });
+    
+    miButton.addEventListener('click', function() {
+      setUnitDisplay('mi');
+      miButton.classList.add('active');
+      kmButton.classList.remove('active');
+      localStorage.setItem('stravaUnit', 'mi');
+    });
+    
+    function setUnitDisplay(unit) {
+      const kmElements = document.querySelectorAll('.distance-km, .elevation-m, .weight-kg');
+      const miElements = document.querySelectorAll('.distance-mi, .elevation-ft, .weight-lb');
+      
+      if (unit === 'km') {
+        kmElements.forEach(el => el.style.display = 'inline');
+        miElements.forEach(el => el.style.display = 'none');
+      } else {
+        kmElements.forEach(el => el.style.display = 'none');
+        miElements.forEach(el => el.style.display = 'inline');
+      }
+    }
+    
+    // Sport tab functionality
+    const sportTabs = document.querySelectorAll('.sport-tab');
+    const sportTypes = ['ride', 'run', 'swim'];
+    
+    sportTabs.forEach((tab, index) => {
+      tab.addEventListener('click', function() {
+        sportTabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Get current parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentSportType = urlParams.get('sport_type') || 'ride';
+        const newSportType = sportTypes[index];
+        
+        if (currentSportType !== newSportType) {
+          // Preserve the year parameter if it exists
+          let newUrl = `?sport_type=${newSportType}`;
+          window.location.href = newUrl;
+        }
+      });
+    });
+    
+    // Set the active tab based on the current sport_type parameter
+    const currentSportType = new URLSearchParams(window.location.search).get('sport_type') || 'ride';
+    const sportTypeIndex = sportTypes.indexOf(currentSportType);
+    if (sportTypeIndex >= 0) {
+      sportTabs.forEach(t => t.classList.remove('active'));
+      sportTabs[sportTypeIndex].classList.add('active');
+    }
+  });
+</script> 

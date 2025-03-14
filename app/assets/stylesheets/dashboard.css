@@ -1,0 +1,1233 @@
+.strava-dashboard {
+  max-width: 954px;
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: #fff;
+  background-color: #161616;
+  border-radius: 10px;
+  border: 1px solid #333;
+  box-sizing: border-box;
+}
+
+.strava-dashboard h1 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  display: none; /* Hiding the title as requested */
+}
+
+.strava-dashboard h2 {
+  color: #fff;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+}
+
+body {
+  background-color: #000;
+  margin: 0;
+  padding: 100px 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* Profile section */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+.profile-pic {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #d9d9d9;
+}
+
+.name-and-location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 11px;
+}
+
+.name {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-align: center;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.location-icon {
+  color: #ba1fd9;
+  margin-right: 5px;
+}
+
+/* Sport type tabs */
+.sport-tabs {
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+  border-radius: 9px;
+  padding: 3px;
+  margin-bottom: 36px;
+  width: 100%;
+  max-width: 471px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sport-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.sport-tab.active {
+  background-color: #ba1fd9;
+  border: none;
+}
+
+.sport-tab:not(.active):hover {
+  background-color: rgba(186, 31, 217, 0.2);
+}
+
+.sport-tab .material-icons {
+  margin-right: 5px;
+}
+
+/* Stats containers */
+.stats-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--secondary-background);
+  border-radius: 10px;
+  margin-bottom: 36px;
+  width: 100%;
+  max-width: 716px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.stat-box {
+  padding: 25px 40px;
+  border: 1px solid var(--secondary-background);
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+  box-sizing: border-box;
+  background-color: var(--card-background);
+}
+
+.stat-value {
+  display: flex;
+  align-items: center;
+  margin-bottom: -5px;
+}
+
+.stat-icon {
+  color: #ba1fd9;
+  font-size: 38px;
+  margin-right: 5px;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  font-family: 'Quantico', sans-serif;
+}
+
+.stat-label {
+  color: #ba1fd9;
+  margin-left: 10%;
+  font-size: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* YTD stats */
+.ytd-stats-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--secondary-background);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 716px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.ytd-stat-box {
+  padding: 25px 40px;
+  border: 1px solid var(--secondary-background);
+  display: flex;
+  flex-direction: column;
+  height: 97px;
+  box-sizing: border-box;
+  background-color: var(--card-background);
+}
+
+.ytd-stat-value {
+  display: flex;
+  align-items: center;
+  margin-bottom: -5px;
+}
+
+.ytd-stat-icon {
+  color: #ba1fd9;
+  font-size: 24px;
+  margin-right: 5px;
+}
+
+.ytd-stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Quantico', sans-serif;
+}
+
+.ytd-stat-label {
+  color: #ba1fd9;
+  margin-left: 10%;
+  font-size: 14px;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* Unit toggle */
+.unit-toggle {
+  display: flex;
+  justify-content: center;
+  background-color: var(--secondary-background);
+  border-radius: 9px;
+  padding: 3px;
+  margin: 0 0 36px auto;
+  width: 240px;
+  position: relative;
+  top: 10px;
+}
+
+.unit-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.unit-button:hover {
+  background-color: var(--hover-color);
+}
+
+.unit-button.active {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+/* Error message */
+.error-message {
+  color: var(--text-color);
+  padding: 15px;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  margin: 20px 0;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.error-message h3 {
+  margin-top: 0;
+  color: var(--text-color);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.error-message a {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.error-message ul, .error-message ol {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.error-message li {
+  margin-bottom: 8px;
+}
+
+.mt-2 {
+  margin-top: 15px;
+}
+
+.activities-list {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.activity-item {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.activity-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.activity-item h3 {
+  color: #FC4C02;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.activity-item p {
+  margin: 5px 0;
+}
+
+.setup-instructions {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.setup-instructions h2 {
+  color: var(--text-color);
+  border-bottom: 1px solid var(--primary-color);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.setup-instructions h3 {
+  margin-top: 20px;
+  color: var(--text-color);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.setup-instructions code {
+  background-color: var(--secondary-background);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+  color: var(--primary-color);
+}
+
+.setup-instructions .note {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-top: 20px;
+}
+
+.dashboard-footer {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-color-secondary);
+  font-size: 0.9em;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.dashboard-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.dashboard-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Year selector */
+.year-selector {
+  display: none; /* Hide instead of removing to avoid breaking any existing references */
+}
+
+.year-selector label {
+  display: none;
+}
+
+.year-select {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px 0;
+  }
+  
+  .strava-dashboard {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .stats-container, .ytd-stats-container {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  
+  .sport-tabs {
+    width: 100%;
+  }
+  
+  .profile-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .profile-pic {
+    margin-bottom: 15px;
+  }
+  
+  .stat-box, .ytd-stat-box {
+    padding: 15px 20px;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+  }
+  
+  .stat-icon {
+    font-size: 30px;
+  }
+  
+  .ytd-stat-number {
+    font-size: 20px;
+  }
+  
+  .unit-toggle {
+    width: 200px;
+    margin: 0 auto 20px;
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .strava-dashboard {
+    width: 100%;
+    border-radius: 0;
+  }
+  
+  .name {
+    font-size: 24px;
+  }
+  
+  .location {
+    font-size: 14px;
+  }
+  
+  .sport-tab {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  .stat-box, .ytd-stat-box {
+    padding: 10px 15px;
+    height: auto;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+  }
+  
+  .stat-icon {
+    font-size: 24px;
+  }
+  
+  .stat-label, .ytd-stat-label {
+    margin-left: 5%;
+  }
+  
+  .unit-toggle {
+    width: 180px;
+  }
+}
+
+/* Theme Toggle Panel */
+.theme-toggle-panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--card-background);
+  border-radius: 30px;
+  padding: 20px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  gap: 20px;
+}
+
+.mode-toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.light-mode .mode-toggle {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .mode-toggle {
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.mode-toggle .sun-icon,
+.mode-toggle .moon-icon {
+  position: absolute;
+  transition: transform 0.3s ease;
+}
+
+.light-mode .mode-toggle .sun-icon,
+.light-mode .mode-toggle .moon-icon {
+  color: #333;
+}
+
+.dark-mode .mode-toggle .sun-icon,
+.dark-mode .mode-toggle .moon-icon {
+  color: #fff;
+}
+
+.mode-toggle .sun-icon {
+  font-size: 28px;
+}
+
+.mode-toggle .moon-icon {
+  font-size: 24px;
+}
+
+.dark-mode .mode-toggle .sun-icon {
+  transform: translateY(-50px);
+}
+
+.dark-mode .mode-toggle .moon-icon {
+  transform: translateY(0);
+}
+
+.light-mode .mode-toggle .sun-icon {
+  transform: translateY(0);
+}
+
+.light-mode .mode-toggle .moon-icon {
+  transform: translateY(50px);
+}
+
+.color-option {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  border-color: var(--text-color);
+  box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* Color options - using the primary colors from each theme */
+.color-purple {
+  background-color: #ba1fd9;
+}
+
+.color-teal {
+  background-color: #00bcd4;
+}
+
+.color-green {
+  background-color: #4caf50;
+}
+
+.color-orange {
+  background-color: #ff5722;
+}
+
+/* Color options */
+.color-option-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mode-toggle-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  left: 70px;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  z-index: 1001;
+  border: 1px solid var(--border-color);
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent var(--card-background) transparent transparent;
+}
+
+.mode-toggle-wrapper:hover .tooltip,
+.color-option-wrapper:hover .tooltip,
+.share-button-wrapper:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile Styles for Theme Toggle */
+@media (max-width: 768px) {
+  .theme-toggle-panel {
+    flex-direction: row;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 15px 20px;
+    gap: 15px;
+    border-radius: 50px;
+  }
+  
+  .share-button-wrapper {
+    margin-top: 0;
+    margin-left: 5px;
+  }
+  
+  /* Adjust tooltip position for mobile */
+  .tooltip {
+    left: 50%;
+    top: -45px;
+    transform: translateX(-50%);
+  }
+  
+  .tooltip::before {
+    top: 100%;
+    left: 50%;
+    margin-top: 0;
+    margin-left: -5px;
+    border-color: var(--card-background) transparent transparent transparent;
+  }
+  
+  /* Hide tooltips on very small screens */
+  @media (max-width: 480px) {
+    .tooltip {
+      display: none;
+    }
+  }
+  
+  /* Adjust dashboard padding to prevent overlap with theme panel */
+  .strava-dashboard {
+    padding-bottom: 100px;
+  }
+}
+
+/* Theme Variables */
+:root {
+  /* Base Theme Transition */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark Mode - Purple Theme (Default) */
+.dark-mode.theme-purple {
+  --primary-color: #ba1fd9;
+  --primary-color-rgb: 186, 31, 217;
+  --primary-color-light: #d254ec;
+  --primary-color-dark: #8c18a3;
+  --background-color: #161616;
+  --secondary-background: #000000;
+  --text-color: #ffffff;
+  --text-color-secondary: #cccccc;
+  --border-color: #333333;
+  --card-background: #222222;
+  --hover-color: rgba(186, 31, 217, 0.2);
+}
+
+/* Light Mode - Purple Theme */
+.light-mode.theme-purple {
+  --primary-color: #9c18b5;
+  --primary-color-rgb: 156, 24, 181;
+  --primary-color-light: #ba1fd9;
+  --primary-color-dark: #7a1290;
+  --background-color: #f8f0fc;
+  --secondary-background: #ffffff;
+  --text-color: #333333;
+  --text-color-secondary: #666666;
+  --border-color: #e0c6e9;
+  --card-background: #ffffff;
+  --hover-color: rgba(156, 24, 181, 0.1);
+}
+
+/* Dark Mode - Teal Theme */
+.dark-mode.theme-teal {
+  --primary-color: #00bcd4;
+  --primary-color-rgb: 0, 188, 212;
+  --primary-color-light: #4dd0e1;
+  --primary-color-dark: #0097a7;
+  --background-color: #102027;
+  --secondary-background: #000a12;
+  --text-color: #ffffff;
+  --text-color-secondary: #cccccc;
+  --border-color: #263238;
+  --card-background: #1c313a;
+  --hover-color: rgba(0, 188, 212, 0.2);
+}
+
+/* Light Mode - Teal Theme */
+.light-mode.theme-teal {
+  --primary-color: #0097a7;
+  --primary-color-rgb: 0, 151, 167;
+  --primary-color-light: #00bcd4;
+  --primary-color-dark: #006064;
+  --background-color: #e0f7fa;
+  --secondary-background: #ffffff;
+  --text-color: #263238;
+  --text-color-secondary: #546e7a;
+  --border-color: #b2ebf2;
+  --card-background: #ffffff;
+  --hover-color: rgba(0, 151, 167, 0.1);
+}
+
+/* Dark Mode - Green Theme */
+.dark-mode.theme-green {
+  --primary-color: #4caf50;
+  --primary-color-rgb: 76, 175, 80;
+  --primary-color-light: #81c784;
+  --primary-color-dark: #388e3c;
+  --background-color: #1b2e1c;
+  --secondary-background: #0d160e;
+  --text-color: #ffffff;
+  --text-color-secondary: #cccccc;
+  --border-color: #2e3b2f;
+  --card-background: #263c27;
+  --hover-color: rgba(76, 175, 80, 0.2);
+}
+
+/* Light Mode - Green Theme */
+.light-mode.theme-green {
+  --primary-color: #2e7d32;
+  --primary-color-rgb: 46, 125, 50;
+  --primary-color-light: #4caf50;
+  --primary-color-dark: #1b5e20;
+  --background-color: #e8f5e9;
+  --secondary-background: #ffffff;
+  --text-color: #1b5e20;
+  --text-color-secondary: #388e3c;
+  --border-color: #c8e6c9;
+  --card-background: #ffffff;
+  --hover-color: rgba(46, 125, 50, 0.1);
+}
+
+/* Dark Mode - Orange Theme */
+.dark-mode.theme-orange {
+  --primary-color: #ff5722;
+  --primary-color-rgb: 255, 87, 34;
+  --primary-color-light: #ff8a65;
+  --primary-color-dark: #e64a19;
+  --background-color: #2d1c14;
+  --secondary-background: #1a0e0a;
+  --text-color: #ffffff;
+  --text-color-secondary: #cccccc;
+  --border-color: #3e2723;
+  --card-background: #3e2723;
+  --hover-color: rgba(255, 87, 34, 0.2);
+}
+
+/* Light Mode - Orange Theme */
+.light-mode.theme-orange {
+  --primary-color: #e64a19;
+  --primary-color-rgb: 230, 74, 25;
+  --primary-color-light: #ff5722;
+  --primary-color-dark: #bf360c;
+  --background-color: #fbe9e7;
+  --secondary-background: #ffffff;
+  --text-color: #3e2723;
+  --text-color-secondary: #5d4037;
+  --border-color: #ffccbc;
+  --card-background: #ffffff;
+  --hover-color: rgba(230, 74, 25, 0.1);
+}
+
+/* Apply Theme Variables */
+body {
+  background-color: var(--secondary-background);
+  color: var(--text-color);
+}
+
+.strava-dashboard {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.strava-dashboard h1,
+.strava-dashboard h2,
+.strava-dashboard h3 {
+  color: var(--text-color);
+}
+
+.name {
+  color: var(--text-color);
+}
+
+.location {
+  color: var(--text-color-secondary);
+}
+
+.sport-tabs {
+  background-color: var(--secondary-background);
+}
+
+.sport-tab {
+  color: var(--text-color);
+}
+
+.sport-tab.active {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.sport-tab:not(.active):hover {
+  background-color: var(--hover-color);
+}
+
+.unit-toggle {
+  background-color: var(--secondary-background);
+}
+
+.unit-button {
+  color: var(--text-color);
+}
+
+.unit-button.active {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.unit-button:hover:not(.active) {
+  background-color: var(--hover-color);
+}
+
+.stats-container,
+.ytd-stats-container {
+  border-color: var(--secondary-background);
+}
+
+.stat-box,
+.ytd-stat-box {
+  border-color: var(--secondary-background);
+  background-color: var(--card-background);
+}
+
+.stat-icon, 
+.ytd-stat-icon,
+.location-icon {
+  color: var(--primary-color);
+}
+
+.stat-number,
+.ytd-stat-number {
+  color: var(--text-color);
+}
+
+.stat-label,
+.ytd-stat-label {
+  color: var(--primary-color);
+}
+
+.dashboard-footer {
+  color: var(--text-color-secondary);
+  border-color: var(--border-color);
+}
+
+.dashboard-footer a,
+.error-message a,
+.setup-instructions a {
+  color: var(--primary-color);
+}
+
+.error-message,
+.setup-instructions {
+  border-color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  color: var(--text-color);
+}
+
+.setup-instructions code {
+  color: var(--primary-color);
+  background-color: var(--secondary-background);
+}
+
+.setup-instructions .note {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-color: var(--primary-color);
+}
+
+/* Theme Toggle Panel Adjustments */
+.theme-toggle-panel {
+  background-color: var(--card-background);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.light-mode .theme-toggle-panel {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.color-option.active {
+  border-color: var(--text-color);
+}
+
+.light-mode .mode-toggle {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .mode-toggle {
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.light-mode .mode-toggle .sun-icon,
+.light-mode .mode-toggle .moon-icon {
+  color: #333;
+}
+
+.dark-mode .mode-toggle .sun-icon,
+.dark-mode .mode-toggle .moon-icon {
+  color: #fff;
+}
+
+/* Remove duplicate theme color definitions */
+/* Convert hex to rgb for transparency */
+.theme-purple {
+  --primary-color: #ba1fd9;
+  --primary-color-rgb: 186, 31, 217;
+}
+
+/* Share Button */
+.share-button-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.share-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.share-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.share-button .material-icons {
+  font-size: 24px;
+}
+
+/* Loading indicator for share image generation */
+.loading-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  border-radius: 10px;
+}
+
+.loading-indicator::after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--border-color);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Fallback for browsers that don't support ClipboardItem */
+.fallback-message {
+  text-align: center;
+  margin-top: 10px;
+  color: var(--text-color-secondary);
+  font-size: 14px;
+  padding: 10px;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 5px;
+}
+
+/* Share Modal */
+.share-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.share-modal.active {
+  display: block;
+  opacity: 1;
+}
+
+.share-modal-content {
+  background-color: var(--card-background);
+  margin: 5% auto;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.share-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.share-modal-header h3 {
+  margin: 0;
+  color: var(--text-color);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.close-modal {
+  color: var(--text-color-secondary);
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 20px;
+}
+
+.close-modal:hover {
+  color: var(--primary-color);
+}
+
+.stats-image-container {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%; /* Square aspect ratio */
+  position: relative;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-green .stats-image-container {
+  border-color: #4caf50;
+}
+
+.theme-teal .stats-image-container {
+  border-color: #00bcd4;
+}
+
+.theme-orange .stats-image-container {
+  border-color: #ff5722;
+}
+
+.theme-purple .stats-image-container {
+  border-color: #ba1fd9;
+}
+
+.stats-image-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.share-options {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.share-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  flex: 1;
+  min-width: 120px;
+}
+
+.theme-green .share-option {
+  background-color: #4caf50;
+}
+
+.theme-teal .share-option {
+  background-color: #00bcd4;
+}
+
+.theme-orange .share-option {
+  background-color: #ff5722;
+}
+
+.theme-purple .share-option {
+  background-color: #ba1fd9;
+}
+
+.share-option:hover {
+  background-color: var(--primary-color-dark);
+  transform: translateY(-2px);
+}
+
+.share-option:active {
+  transform: translateY(0);
+}
+
+.share-option .material-icons {
+  font-size: 20px;
+}
+
+/* Mobile adjustments for share modal */
+@media (max-width: 768px) {
+  .share-modal-content {
+    margin: 15% auto;
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .share-options {
+    flex-direction: column;
+  }
+  
+  .share-option {
+    width: 100%;
+  }
+} 
