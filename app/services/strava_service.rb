@@ -14,6 +14,16 @@ class StravaService
     if response.code.to_i == 200
       JSON.parse(response.body)
     else
+      # Check if token is expired and try to refresh
+      if response.code.to_i == 401
+        new_token = StravaTokenService.handle_expired_token(response)
+        if new_token
+          @access_token = new_token
+          # Retry the request with the new token
+          return athlete
+        end
+      end
+      
       error_message = "Failed to fetch athlete data. Status: #{response.code}"
       begin
         error_details = JSON.parse(response.body)
@@ -33,6 +43,16 @@ class StravaService
     if response.code.to_i == 200
       JSON.parse(response.body)
     else
+      # Check if token is expired and try to refresh
+      if response.code.to_i == 401
+        new_token = StravaTokenService.handle_expired_token(response)
+        if new_token
+          @access_token = new_token
+          # Retry the request with the new token
+          return athlete_stats(athlete_id)
+        end
+      end
+      
       error_message = "Failed to fetch athlete stats. Status: #{response.code}"
       begin
         error_details = JSON.parse(response.body)
