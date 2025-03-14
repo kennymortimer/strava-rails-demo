@@ -1,9 +1,10 @@
 services:
   - type: web
     name: strava-dashboard
-    env: docker
+    env: ruby
     plan: free
-    dockerfilePath: ./Dockerfile
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -23,8 +24,6 @@ services:
         value: "true"
       - key: RAILS_ENV
         value: "production"
-      - key: RENDER
-        value: "true"
 
 databases:
   - name: strava_dashboard_db
