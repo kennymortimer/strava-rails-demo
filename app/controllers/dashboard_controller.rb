@@ -4,17 +4,13 @@ class DashboardController < ApplicationController
   # - read (for athlete profile)
   # - read_all (for detailed athlete stats)
   
-  # IMPORTANT: Replace this with your actual Strava access token
-  # Strava tokens expire after 6 hours, so you may need to generate a new one
-  # if you're getting 401 Authorization errors
-  ACCESS_TOKEN = "4632bd9b6bf6122559f2a8163a941be9ab049935"
-  
-  # If you're having issues with permissions, you can create a new token with the required scopes at:
-  # https://www.strava.com/settings/api
+  # Token is now managed by StravaTokenService
+  # which handles refreshing the token when needed
   
   def index
     @last_updated = Time.now
-    @strava_service = StravaService.new(ACCESS_TOKEN)
+    access_token = StravaTokenService.get_current_token
+    @strava_service = StravaService.new(access_token)
     @error = nil
     @stats_error = nil
     @athlete = nil
