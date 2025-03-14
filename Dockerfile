@@ -1,24 +1,26 @@
-FROM ruby:3.2.2-slim
+FROM ruby:3.2.2
 
-# Install PostgreSQL client and development libraries
+# Install dependencies
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential postgresql-client libpq-dev && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    apt-get install -y build-essential libpq-dev nodejs
 
 # Set working directory
 WORKDIR /app
 
-# Copy Gemfile and Gemfile.lock
+# Install gems
 COPY Gemfile Gemfile.lock ./
+RUN gem install bundler && bundle install
 
-# Install dependencies
-RUN bundle install
-
-# Copy the rest of the application
+# Copy application code
 COPY . .
 
 # Precompile assets
-RUN bundle exec rake assets:precompile RAILS_ENV=production SECRET_KEY_BASE=dummy
+ENV RAILS_ENV=production
+ENV RAILS_SERVE_STATIC_FILES=true
+RUN bundle exec rake assets:precompile SECRET_KEY_BASE=dummy
 
-# Set up the entry point
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+# Expose port
+EXPOSE 3000
+
+# Start the server
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]

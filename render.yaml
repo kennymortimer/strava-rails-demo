@@ -20,15 +20,7 @@ services:
         sync: false
       - key: RAILS_SERVE_STATIC_FILES
         value: "true"
-      - key: RENDER
-        value: "true"
-    disk:
-      name: strava-app-data
-      mountPath: /data
-      sizeGB: 1
 
 databases:
   - name: strava_dashboard_db
-    plan: free
-    databaseName: strava_dashboard
-    user: strava_dashboard 
+    plan: free 
