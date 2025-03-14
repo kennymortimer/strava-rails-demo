@@ -16,6 +16,7 @@ A Ruby on Rails application that displays your Strava athlete profile, statistic
 - Ruby 3.0.0 or higher
 - Rails 7.1.3 or higher
 - A Strava account and API access token
+- PostgreSQL (for production environment)
 
 ## Setup
 
