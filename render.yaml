@@ -5,6 +5,9 @@ services:
     plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
+    buildpacks:
+      - heroku/ruby
+      - apt
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -36,6 +39,7 @@ services:
         - Gemfile.lock
         - Rakefile
         - config.ru
+        - Aptfile
     disk:
       name: strava-app-data
       mountPath: /data
