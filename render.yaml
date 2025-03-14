@@ -1,19 +1,9 @@
 services:
   - type: web
     name: strava-dashboard
-    env: ruby
+    env: docker
     plan: free
-    buildCommand: "./bin/render-build.sh"
-    startCommand: "bundle exec puma -C config/puma.rb"
-    buildFilter:
-      paths:
-        - bin/render-build.sh
-        - Gemfile
-        - Gemfile.lock
-        - config/**
-        - app/**
-        - lib/**
-        - db/**
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -31,6 +21,8 @@ services:
         sync: false
       - key: RAILS_SERVE_STATIC_FILES
         value: "true"
+      - key: RAILS_ENV
+        value: "production"
       - key: RENDER
         value: "true"
 
